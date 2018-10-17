@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_200936) do
+ActiveRecord::Schema.define(version: 2018_10_17_202908) do
 
   create_table "games", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "milk", default: 0
+    t.integer "sugar", default: 0
+    t.integer "ice_creams", default: 0
+    t.decimal "balance", default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_inventories_on_game_id"
   end
 
 end
