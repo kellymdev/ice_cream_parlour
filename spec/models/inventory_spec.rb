@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Inventory, type: :model do
+  fixtures :games
+
   describe 'validations' do
-    let(:game) do
-      Game.create!(name: 'Test')
-    end
+    let(:game) { games(:game_one) }
     let(:milk) { 0 }
     let(:sugar) { 0 }
     let(:ice_creams) { 0 }
