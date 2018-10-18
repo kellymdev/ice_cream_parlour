@@ -1,0 +1,8 @@
+<h2>New Game</h2>
+
+<%= form_with model: @game do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.submit 'Create Game' %>
+<% end %>
