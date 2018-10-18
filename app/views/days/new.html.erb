@@ -1,0 +1,23 @@
+<h2>New Day for <%= @game.name %></h2>
+
+<p>The milk price is: $<%= format_price(@day.milk_price) %></p>
+<p>The sugar price is: $<%= format_price(@day.sugar_price) %></p>
+
+<%= form_with model: [@game, @day] do |f| %>
+  <%= f.hidden_field :milk_price, value: @day.milk_price %>
+  <%= f.hidden_field :sugar_price, value: @day.sugar_price %>
+
+  <%= f.label :milk, 'How much milk do you need?' %>
+  <%= f.text_field :milk %>
+
+  <%= f.label :sugar, 'How much sugar do you need?' %>
+  <%= f.text_field :sugar %>
+
+  <%= f.label :ice_creams, 'How many ice creams will you make?' %>
+  <%= f.text_field :ice_creams %>
+
+  <%= f.label :ice_cream_price, 'What price will you sell your ice creams for?' %>
+  <%= f.text_field :ice_cream_price %>
+
+  <%= f.submit 'Make Ice Creams' %>
+<% end %>

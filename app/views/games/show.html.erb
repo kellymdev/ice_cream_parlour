@@ -1,3 +1,16 @@
 <h2><%= @game.name %></h2>
 
 <p><%= link_to('Back to Games List', games_path) %></p>
+
+<dl>
+  <dt>Balance</dt>
+  <dd><%= @game.inventory.balance %></dd>
+
+  <dt>Milk</dt>
+  <dd><%= @game.inventory.milk %></dd>
+
+  <dt>Sugar</dt>
+  <dd><%= @game.inventory.sugar %></dd>
+</dl>
+
+<p><%= link_to('New Day', new_game_day_path(@game)) %></p>

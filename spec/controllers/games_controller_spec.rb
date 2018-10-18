@@ -84,11 +84,11 @@ RSpec.describe GamesController, type: :controller do
 
   describe '#destroy' do
     it 'deletes the game' do
-      expect { delete :destroy, params: { id: game.id } }.to change { Game.count }.by(-1)
+      expect { delete :destroy, params: { id: game.to_param } }.to change { Game.count }.by(-1)
     end
 
     it 'redirects to the Games List' do
-      delete :destroy, params: { id: game.id }
+      delete :destroy, params: { id: game.to_param }
 
       expect(response).to redirect_to games_path
     end
