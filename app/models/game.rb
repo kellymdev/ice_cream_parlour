@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Game < ApplicationRecord
   has_one :inventory, dependent: :destroy, inverse_of: :game
   has_many :days, dependent: :destroy
