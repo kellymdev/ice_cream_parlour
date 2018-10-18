@@ -5,4 +5,7 @@
   <td>
     <%= game.inventory&.balance %>
   </td>
+  <td>
+    <%= link_to 'Delete', game_path(game), method: :delete, data: { confirm: 'Are you sure?' } %>
+  </td>
 </tr>

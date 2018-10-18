@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :find_game, only: [:show]
+  before_action :find_game, only: [:show, :destroy]
 
   def index
     @games = Game.all
@@ -22,6 +22,12 @@ class GamesController < ApplicationController
   end
 
   def show
+  end
+
+  def destroy
+    @game.destroy
+
+    redirect_to games_path
   end
 
   private
