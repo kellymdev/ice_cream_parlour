@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Day, type: :model do
-  fixtures :games
-
   describe 'validations' do
-    let(:game) { games(:game_one) }
+    let(:game) { create(:game) }
     let(:temperature) { 20.0 }
     let(:milk_price) { 0.5 }
     let(:sugar_price) { 0.02 }

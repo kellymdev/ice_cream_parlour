@@ -1,5 +1,6 @@
 class Day < ApplicationRecord
   belongs_to :game
+  has_many :purchases
 
   validates :temperature, numericality: true, allow_nil: true
   validates :milk_price, numericality: true, allow_nil: true
