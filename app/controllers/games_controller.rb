@@ -11,6 +11,16 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
+  def create
+    @game = CreateGame.new(game_params).call
+
+    if @game.errors.present?
+      render :new
+    else
+      redirect_to @game
+    end
+  end
+
   def show
   end
 
@@ -18,5 +28,9 @@ class GamesController < ApplicationController
 
   def find_game
     @game = Game.find(params[:id])
+  end
+
+  def game_params
+    params.require(:game).permit(:name)
   end
 end

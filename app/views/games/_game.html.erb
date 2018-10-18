@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <%= game.name %>
+    <%= link_to(game.name, game_path(game)) %>
   </td>
   <td>
     <%= game.inventory&.balance %>
