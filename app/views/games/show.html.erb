@@ -4,7 +4,7 @@
 
 <dl>
   <dt>Balance</dt>
-  <dd><%= @game.inventory.balance %></dd>
+  <dd>$<%= format_price(@game.inventory.balance) %></dd>
 
   <dt>Milk</dt>
   <dd><%= @game.inventory.milk %></dd>
@@ -14,3 +14,7 @@
 </dl>
 
 <p><%= link_to('New Day', new_game_day_path(@game)) %></p>
+
+<% if @game.previous_day.present? %>
+  <p>You made <%= pluralize(@game.previous_day.ice_creams_made, 'ice cream') %>. You sold <%= pluralize(@game.previous_day.ice_creams_sold, 'ice cream') %> for $<%= format_price(@game.previous_day.ice_cream_price) %> each. You made a <%= @game.previous_day.profit.positive? ? 'profit' : 'loss' %> of <%= format_price(@game.previous_day.profit) %>.</p>
+<% end %>
