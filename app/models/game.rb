@@ -5,4 +5,8 @@ class Game < ApplicationRecord
   has_many :days, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2 }
+
+  def previous_day
+    days&.persisted&.last
+  end
 end

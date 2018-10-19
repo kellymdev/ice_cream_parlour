@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Day, type: :model do
+  let(:game) { create(:game) }
+
   describe 'validations' do
-    let(:game) { create(:game) }
     let(:temperature) { 20.0 }
     let(:milk_price) { 0.5 }
     let(:sugar_price) { 0.02 }
@@ -102,6 +103,21 @@ RSpec.describe Day, type: :model do
           expect(day).not_to be_valid
           expect(day.errors.full_messages.to_sentence).to eq 'Profit is not a number'
         end
+      end
+    end
+  end
+
+  describe 'scopes' do
+    describe 'persisted' do
+      let(:day_1) { game.days.create! }
+      let(:day_2) { game.days.build }
+
+      it 'returns days that have been saved to the database' do
+        expect(game.days.persisted).to include day_1
+      end
+
+      it 'does not return days that are new records' do
+        expect(game.days.persisted).not_to include day_2
       end
     end
   end

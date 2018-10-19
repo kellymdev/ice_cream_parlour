@@ -11,4 +11,6 @@ class Day < ApplicationRecord
   validates :ice_creams_sold, numericality: true, allow_nil: true
   validates :ice_cream_price, numericality: true, allow_nil: true
   validates :profit, numericality: true, allow_nil: true
+
+  scope :persisted, -> { where.not(id: nil) }
 end

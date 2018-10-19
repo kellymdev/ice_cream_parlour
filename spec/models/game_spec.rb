@@ -32,4 +32,23 @@ RSpec.describe Game, type: :model do
       end
     end
   end
+
+  describe '#previous_day' do
+    let(:game) { create(:game) }
+
+    context 'when there is a previous day' do
+      let!(:day_1) { create(:day, game: game) }
+      let!(:day_2) { create(:day, game: game) }
+
+      it 'returns the last saved day for the game' do
+        expect(game.previous_day).to eq day_2
+      end
+    end
+
+    context 'when there are no days for the game' do
+      it 'returns nil' do
+        expect(game.previous_day).to eq nil
+      end
+    end
+  end
 end
