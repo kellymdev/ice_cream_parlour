@@ -7,7 +7,7 @@
 <p><%= link_to('New Day', new_game_day_path(@game)) %></p>
 
 <% if @game.previous_day.present? %>
-  <p>You made <%= pluralize(@game.previous_day.ice_creams_made, 'ice cream') %>. The temperature was <%= @game.previous_day.temperature %>&#8451;. You sold <%= pluralize(@game.previous_day.ice_creams_sold, 'ice cream') %> for $<%= format_price(@game.previous_day.ice_cream_price) %> each. You made a <%= @game.previous_day.profit.positive? ? 'profit' : 'loss' %> of $<%= format_price(@game.previous_day.profit) %>.</p>
+  <p>You made <%= pluralize(@game.previous_day.ice_creams_made, 'ice cream') %>. The temperature was <%= @game.previous_day.temperature %>&#8451;. You sold <%= pluralize(@game.previous_day.ice_creams_sold, 'ice cream') %> for $<%= format_price(@game.previous_day.ice_cream_price) %> each. You made a <%= profit_description(@game.previous_day.profit) %> of $<%= format_price(@game.previous_day.profit) %>.</p>
 <% end %>
 
 <% if @game.days.present? %>
@@ -30,4 +30,4 @@
   </table>
 <% end %>
 
-<p>You have made a total profit of $<%= format_price(@game.total_profit) %>.</p>
+<p>You have made a <%= profit_description(@game.total_profit) %> of $<%= format_price(@game.total_profit) %>.</p>

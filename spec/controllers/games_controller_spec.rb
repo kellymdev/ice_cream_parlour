@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
   let!(:game) { create(:game) }
+  let!(:inventory) { create(:inventory, game: game) }
 
   describe '#index' do
     render_views
