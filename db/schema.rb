@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_231449) do
+ActiveRecord::Schema.define(version: 2018_11_21_210311) do
 
   create_table "days", force: :cascade do |t|
     t.integer "game_id"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2018_10_17_231449) do
     t.integer "game_id"
     t.integer "milk", default: 0
     t.integer "sugar", default: 0
-    t.integer "ice_creams", default: 0
     t.decimal "balance", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

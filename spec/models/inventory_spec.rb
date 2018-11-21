@@ -5,13 +5,11 @@ RSpec.describe Inventory, type: :model do
     let(:game) { create(:game) }
     let(:milk) { 0 }
     let(:sugar) { 0 }
-    let(:ice_creams) { 0 }
     let(:balance) { 0.0 }
     let(:inventory) do
       game.create_inventory(
         milk: milk,
         sugar: sugar,
-        ice_creams: ice_creams,
         balance: balance
       )
     end
@@ -58,26 +56,6 @@ RSpec.describe Inventory, type: :model do
         it 'is not valid' do
           expect(inventory).not_to be_valid
           expect(inventory.errors.full_messages.to_sentence).to eq 'Sugar is not a number'
-        end
-      end
-    end
-
-    describe 'ice_creams' do
-      context 'without a value' do
-        let(:ice_creams) {}
-
-        it 'is not valid' do
-          expect(inventory).not_to be_valid
-          expect(inventory.errors.full_messages.to_sentence).to eq "Ice creams can't be blank and Ice creams is not a number"
-        end
-      end
-
-      context 'with an alphabetic character' do
-        let(:ice_creams) { 'a' }
-
-        it 'is not valid' do
-          expect(inventory).not_to be_valid
-          expect(inventory.errors.full_messages.to_sentence).to eq 'Ice creams is not a number'
         end
       end
     end
