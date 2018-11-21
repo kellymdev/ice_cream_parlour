@@ -2,16 +2,7 @@
 
 <p><%= link_to('Back to Games List', games_path) %></p>
 
-<dl>
-  <dt>Balance</dt>
-  <dd>$<%= format_price(@game.inventory.balance) %></dd>
-
-  <dt>Milk</dt>
-  <dd><%= @game.inventory.milk %></dd>
-
-  <dt>Sugar</dt>
-  <dd><%= @game.inventory.sugar %></dd>
-</dl>
+<%= render partial: 'inventory' %>
 
 <p><%= link_to('New Day', new_game_day_path(@game)) %></p>
 
