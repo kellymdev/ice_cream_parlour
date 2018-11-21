@@ -3,7 +3,13 @@
 <p>The milk price is: $<%= format_price(@day.milk_price) %></p>
 <p>The sugar price is: $<%= format_price(@day.sugar_price) %></p>
 
-<%= form_with model: [@game, @day] do |f| %>
+<% if @errors.present? %>
+  <ul class="error-list">
+    <%= render partial: 'shared/error', collection: @errors %>
+  </ul>
+<% end %>
+
+<%= form_with model: [@game, @day], local: true do |f| %>
   <%= f.hidden_field :milk_price, value: @day.milk_price %>
   <%= f.hidden_field :sugar_price, value: @day.sugar_price %>
 

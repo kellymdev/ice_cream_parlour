@@ -1,12 +1,13 @@
 <h2>New Game</h2>
 
 <% if @game.errors.any? %>
-  <ul class='error-list'>
-    <%= render partial: 'error', collection: @game.errors.full_messages %>
+  <ul>
+    <%= render partial: 'shared/error', collection: @game.errors.full_messages %>
   </ul>
+
 <% end %>
 
-<%= form_with model: @game do |f| %>
+<%= form_with model: @game, local: true do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
 
