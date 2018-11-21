@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  let(:game) { create(:game) }
+
   describe 'validations' do
     describe 'name' do
       let(:game) { Game.new(name: name) }
@@ -34,8 +36,6 @@ RSpec.describe Game, type: :model do
   end
 
   describe '#previous_day' do
-    let(:game) { create(:game) }
-
     context 'when there is a previous day' do
       let!(:day_1) { create(:day, game: game) }
       let!(:day_2) { create(:day, game: game) }
@@ -48,6 +48,34 @@ RSpec.describe Game, type: :model do
     context 'when there are no days for the game' do
       it 'returns nil' do
         expect(game.previous_day).to eq nil
+      end
+    end
+  end
+
+  describe '#total_profit' do
+    let!(:inventory) { create(:inventory, game: game, balance: balance) }
+
+    context 'when the inventory balance is higher than the starting balance' do
+      let(:balance) { 5.01 }
+
+      it 'returns a positive profit' do
+        expect(game.total_profit).to eq 0.01
+      end
+    end
+
+    context 'when the inventory balance is the same as the starting balance' do
+      let(:balance) { 5.0 }
+
+      it 'returns zero' do
+        expect(game.total_profit).to eq 0
+      end
+    end
+
+    context 'when the inventory balance is lower than the starting balance' do
+      let(:balance) { 4.99 }
+
+      it 'returns a loss' do
+        expect(game.total_profit).to eq(-0.01)
       end
     end
   end

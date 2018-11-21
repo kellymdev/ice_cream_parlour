@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CreateGame
-  STARTING_BALANCE = 5.0
-
   attr_reader :game_params, :game
 
   def initialize(game_params)
@@ -20,6 +18,6 @@ class CreateGame
   private
 
   def create_inventory
-    game.create_inventory(balance: STARTING_BALANCE)
+    game.create_inventory(balance: Game::STARTING_BALANCE)
   end
 end
