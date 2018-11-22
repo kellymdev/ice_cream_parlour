@@ -1,4 +1,4 @@
-Given("a user is on the Games List") do
+Given("I am on the Games List") do
   visit('/games')
 end
 

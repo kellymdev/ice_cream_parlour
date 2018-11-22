@@ -1,7 +1,7 @@
 Feature: Game Creation
 
 Scenario: A user can create a new game
-  Given a user is on the Games List
+  Given I am on the Games List
    When I click the "New Game" link
    Then I should see "New Game"
    Then I should see "Back to Games List"

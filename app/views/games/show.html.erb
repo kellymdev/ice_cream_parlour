@@ -1,6 +1,6 @@
 <h2><%= @game.name %></h2>
 
-<p><%= link_to('Back to Games List', games_path) %></p>
+<p><%= link_to('Back to Games List', games_path) %> | <%= link_to 'Delete', game_path(@game), method: :delete, data: { confirm: 'Are you sure?' } %></p>
 
 <%= render partial: 'inventory' %>
 

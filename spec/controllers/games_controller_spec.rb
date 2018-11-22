@@ -93,5 +93,11 @@ RSpec.describe GamesController, type: :controller do
 
       expect(response).to redirect_to games_path
     end
+
+    it 'displays a success message' do
+      delete :destroy, params: { id: game.to_param }
+
+      expect(flash[:success]).to eq 'Game successfully deleted'
+    end
   end
 end

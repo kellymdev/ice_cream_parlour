@@ -27,6 +27,8 @@ class GamesController < ApplicationController
   def destroy
     @game.destroy
 
+    flash[:success] = 'Game successfully deleted'
+
     redirect_to games_path
   end
 

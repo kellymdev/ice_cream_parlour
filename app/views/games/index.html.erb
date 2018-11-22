@@ -1,5 +1,11 @@
 <h2>Games</h2>
 
+<% if flash[:success].present? %>
+  <div class="success-message">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+
 <%= link_to 'New Game', new_game_path %>
 
 <table>
