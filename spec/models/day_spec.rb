@@ -46,7 +46,25 @@ RSpec.describe Day, type: :model do
 
         it 'is not valid' do
           expect(day).not_to be_valid
-          expect(day.errors.full_messages.to_sentence).to eq 'Milk price is not a number'
+          expect(day.errors.full_messages.to_sentence).to eq 'Milk price is not a number and Milk price is not included in the list'
+        end
+      end
+
+      context 'with a price that is too low' do
+        let(:milk_price) { 0.20 }
+
+        it 'is not valid' do
+          expect(day).not_to be_valid
+          expect(day.errors.full_messages.to_sentence).to eq 'Milk price is not included in the list'
+        end
+      end
+
+      context 'with a price that is too high' do
+        let(:milk_price) { 0.51 }
+
+        it 'is not valid' do
+          expect(day).not_to be_valid
+          expect(day.errors.full_messages.to_sentence).to eq 'Milk price is not included in the list'
         end
       end
     end
@@ -57,7 +75,25 @@ RSpec.describe Day, type: :model do
 
         it 'is not valid' do
           expect(day).not_to be_valid
-          expect(day.errors.full_messages.to_sentence).to eq 'Sugar price is not a number'
+          expect(day.errors.full_messages.to_sentence).to eq 'Sugar price is not a number and Sugar price is not included in the list'
+        end
+      end
+
+      context 'with a price that is too low' do
+        let(:sugar_price) { 0.01 }
+
+        it 'is not valid' do
+          expect(day).not_to be_valid
+          expect(day.errors.full_messages.to_sentence).to eq 'Sugar price is not included in the list'
+        end
+      end
+
+      context 'with a price that is too high' do
+        let(:sugar_price) { 0.06 }
+
+        it 'is not valid' do
+          expect(day).not_to be_valid
+          expect(day.errors.full_messages.to_sentence).to eq 'Sugar price is not included in the list'
         end
       end
     end
