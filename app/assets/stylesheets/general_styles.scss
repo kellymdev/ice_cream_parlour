@@ -27,8 +27,22 @@ form {
   }
 }
 
+%message-box {
+  padding: 10px 15px;
+}
+
 .success-message {
+  @extend %message-box;
   color: green;
+  border: 1px solid green;
+  margin-bottom: 20px;
+}
+
+.error-list {
+  @extend %message-box;
+  color: $pink;
+  list-style-type: none;
+  border: 1px solid $pink;
 }
 
 .button {
