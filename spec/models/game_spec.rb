@@ -35,6 +35,34 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  describe '#over?' do
+    let!(:inventory) { create(:inventory, game: game, balance: balance) }
+
+    context 'when the balance is greater than zero' do
+      let(:balance) { 0.01 }
+
+      it 'returns false' do
+        expect(game.over?).to eq false
+      end
+    end
+
+    context 'when the balance is zero' do
+      let(:balance) { 0.0 }
+
+      it 'returns true' do
+        expect(game.over?).to eq true
+      end
+    end
+
+    context 'when the balance is less than zero' do
+      let(:balance) { -0.01 }
+
+      it 'returns true' do
+        expect(game.over?).to eq true
+      end
+    end
+  end
+
   describe '#previous_day' do
     context 'when there is a previous day' do
       let!(:day_1) { create(:day, game: game) }

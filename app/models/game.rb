@@ -8,6 +8,10 @@ class Game < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 2 }
 
+  def over?
+    inventory.balance <= 0
+  end
+
   def previous_day
     days&.persisted&.last
   end

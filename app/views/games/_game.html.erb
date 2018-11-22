@@ -1,6 +1,10 @@
 <tr>
   <td>
-    <%= link_to(game.name, game_path(game)) %>
+    <% if game.over? %>
+      <%= game.name %>
+    <% else %>
+      <%= link_to(game.name, game_path(game)) %>
+    <% end %>
   </td>
   <td>
     <%= game.inventory&.balance %>
