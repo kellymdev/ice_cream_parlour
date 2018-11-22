@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProcessDay
-  attr_reader :game, :milk_price, :sugar_price, :milk, :sugar, :ice_creams_to_make, :ice_cream_price, :day, :error_list
+  attr_reader :game, :milk_price, :sugar_price, :milk, :sugar, :ice_creams_to_make, :ice_cream_price, :day, :error_list, :ice_creams_sold
 
   def initialize(game, day_params)
     @game = game
@@ -15,22 +15,19 @@ class ProcessDay
   end
 
   def call
-    starting_balance = game.inventory.balance
-
     build_day
 
-    buy_milk
-    buy_sugar
+    buy_supplies('milk', milk)
+    buy_supplies('sugar', sugar)
 
     make_ice_cream
 
     return unless error_list.empty?
 
     determine_temperature
-    pedestrians = determine_pedestrians
 
-    sell_ice_creams(pedestrians)
-    calculate_profit(starting_balance)
+    sell_ice_creams
+    calculate_profit
 
     day.save
   end
@@ -48,27 +45,30 @@ class ProcessDay
     )
   end
 
-  def buy_milk
-    cost_of_milk = milk * milk_price
-    new_balance = game.inventory.balance - cost_of_milk
-
-    if new_balance <= 0
-      error_list << 'Insufficient funds to buy milk'
-    else
-      game.inventory.update!(milk: game.inventory.milk + milk, balance: new_balance)
-      day.purchases.build(ingredient: 'milk', quantity: milk)
-    end
+  def cost_of_goods
+    cost_of_milk + cost_of_sugar
   end
 
-  def buy_sugar
-    cost_of_sugar = sugar * sugar_price
-    new_balance = game.inventory.balance - cost_of_sugar
+  def cost_of_milk
+    milk * milk_price
+  end
+
+  def cost_of_sugar
+    sugar * sugar_price
+  end
+
+  def buy_supplies(commodity, quantity)
+    new_balance = game.inventory.balance - send("cost_of_#{commodity}")
 
     if new_balance <= 0
-      error_list << 'Insufficient funds to buy sugar'
+      error_list << "Insufficient funds to buy #{commodity}"
     else
-      game.inventory.update!(sugar: game.inventory.sugar + sugar, balance: new_balance)
-      day.purchases.build(ingredient: 'sugar', quantity: sugar)
+      game.inventory.update!(
+        commodity => game.inventory.send(commodity) + quantity,
+        'balance' => new_balance
+      )
+
+      day.purchases.build(ingredient: commodity, quantity: quantity)
     end
   end
 
@@ -77,7 +77,10 @@ class ProcessDay
 
     if max_ice_creams >= ice_creams_to_make
       day.ice_creams_made = ice_creams_to_make
-      game.inventory.update!(milk: game.inventory.milk - ice_creams_to_make, sugar: game.inventory.sugar - ice_creams_to_make)
+      game.inventory.update!(
+        milk: game.inventory.milk - ice_creams_to_make,
+        sugar: game.inventory.sugar - ice_creams_to_make
+      )
     else
       error_list << "You don't have enough ingredients to make that many ice creams"
     end
@@ -93,16 +96,22 @@ class ProcessDay
     CalculatePedestrians.new(day.temperature).call
   end
 
-  def sell_ice_creams(pedestrians)
-    ice_creams_sold = CalculateIceCreamsSold.new(day.ice_creams_made, pedestrians, ice_cream_price).call
+  def ice_creams_sold
+    @ice_creams_sold ||= CalculateIceCreamsSold.new(day.ice_creams_made, determine_pedestrians, ice_cream_price).call
+  end
+
+  def ice_cream_sales
+    ice_cream_price * ice_creams_sold
+  end
+
+  def sell_ice_creams
     day.ice_creams_sold = ice_creams_sold
     day.ice_cream_price = ice_cream_price
 
-    sales = ice_cream_price * ice_creams_sold
-    game.inventory.update!(balance: game.inventory.balance + sales)
+    game.inventory.update!(balance: game.inventory.balance + ice_cream_sales)
   end
 
-  def calculate_profit(starting_balance)
-    day.profit = game.inventory.balance - starting_balance
+  def calculate_profit
+    day.profit = ice_cream_sales - cost_of_goods
   end
 end

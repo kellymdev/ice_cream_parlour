@@ -24,6 +24,10 @@ RSpec.describe ProcessDay, type: :service do
     subject(:service) { described_class.new(game, day_params) }
 
     context 'with sufficient funds' do
+      before do
+        allow_any_instance_of(CalculateIceCreamsSold).to receive(:call).and_return(1)
+      end
+
       it 'creates a day' do
         expect { service.call }.to change { Day.count }.by 1
       end
@@ -38,8 +42,8 @@ RSpec.describe ProcessDay, type: :service do
         expect(day.ice_cream_price).to eq 0.60
 
         expect(day.temperature).not_to be_nil
-        expect(day.profit).not_to be_nil
-        expect(day.ice_creams_sold).not_to be_nil
+        expect(day.profit).to eq 0.08
+        expect(day.ice_creams_sold).to eq 1
       end
     end
 
