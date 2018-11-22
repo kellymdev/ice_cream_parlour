@@ -6,10 +6,10 @@
       <%= link_to(game.name, game_path(game)) %>
     <% end %>
   </td>
-  <td>
+  <td class="right-aligned">
     <%= game.inventory&.balance %>
   </td>
-  <td>
+  <td class="right-aligned">
     <%= game.total_profit %>
   </td>
   <td>

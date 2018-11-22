@@ -1,0 +1,21 @@
+@import 'fonts_and_colours';
+
+.price-box,
+.day-summary {
+  margin: 30px 0;
+}
+
+.price-box {
+  border: 1px solid $blue;
+  width: 300px;
+
+  p {
+    text-align: center;
+  }
+}
+
+.day-summary {
+  margin: 30px 20px;
+  border: 1px solid $pink;
+  padding-left: 15px;
+}

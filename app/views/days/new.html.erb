@@ -1,9 +1,11 @@
-<h2>New Day for <%= @game.name %></h2>
+<h1>New Day for: <%= @game.name %></h1>
 
 <%= render partial: 'games/inventory' %>
 
-<p>Today's milk price is: $<%= format_price(@day.milk_price) %></p>
-<p>Today's sugar price is: $<%= format_price(@day.sugar_price) %></p>
+<div class="price-box">
+  <p>Today's milk price is: $<%= format_price(@day.milk_price) %></p>
+  <p>Today's sugar price is: $<%= format_price(@day.sugar_price) %></p>
+</div>
 
 <% if @errors.present? %>
   <ul class="error-list">
@@ -27,7 +29,7 @@
   <%= f.label :ice_cream_price, 'What price will you sell your ice creams for?' %>
   <%= f.text_field :ice_cream_price %>
 
-  <%= f.submit 'Make Ice Creams' %>
+  <%= f.submit 'Make Ice Creams', class: 'button' %>
 <% end %>
 
 <div class="back-link">

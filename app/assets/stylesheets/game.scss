@@ -1,8 +1,14 @@
+@import 'fonts_and_colours';
+
 .games-list,
 .inventory,
 .day-history {
+  th {
+    text-align: left;
+  }
+
   td {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid $medium-grey;
   }
 
   a {
@@ -12,4 +18,8 @@
 
 .games-list {
   margin-top: 25px;
+}
+
+.inventory {
+  font-size: 1.2em;
 }

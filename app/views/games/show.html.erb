@@ -1,20 +1,20 @@
-<h2><%= @game.name %></h2>
+<h1><%= @game.name %></h1>
 
-<p><%= link_to('Back to Games List', games_path) %> | <%= link_to 'Delete', game_path(@game), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+<p><%= link_to('New Day', new_game_day_path(@game), class: 'button') %> <%= link_to('Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button') %></p>
 
 <%= render partial: 'inventory' %>
 
-<p><%= link_to('New Day', new_game_day_path(@game)) %></p>
-
-<% if @game.previous_day.present? %>
-  <p>You made <%= pluralize(@game.previous_day.ice_creams_made, 'ice cream') %>. The temperature was <%= @game.previous_day.temperature %>&#8451;. You sold <%= pluralize(@game.previous_day.ice_creams_sold, 'ice cream') %> for $<%= format_price(@game.previous_day.ice_cream_price) %> each. You made a <%= profit_description(@game.previous_day.profit) %> of $<%= format_price(@game.previous_day.profit) %>.</p>
-<% end %>
+<div class="day-summary">
+  <% if @game.previous_day.present? %>
+    <p>You made <%= pluralize(@game.previous_day.ice_creams_made, 'ice cream') %>. The temperature was <%= @game.previous_day.temperature %>&deg;C. You sold <%= pluralize(@game.previous_day.ice_creams_sold, 'ice cream') %> for $<%= format_price(@game.previous_day.ice_cream_price) %> each. You made a <%= profit_description(@game.previous_day.profit) %> of $<%= format_price(@game.previous_day.profit) %>.</p>
+  <% end %>
+</div>
 
 <% if @game.days.present? %>
   <table class="day-history">
     <thead>
       <tr>
-        <th>Temperature (&#8451;)</th>
+        <th>Temperature (&deg;C)</th>
         <th>Milk Price ($)</th>
         <th>Sugar Price ($)</th>
         <th>Ice Creams Made</th>
@@ -31,3 +31,7 @@
 <% end %>
 
 <p>You have made a <%= profit_description(@game.total_profit) %> of $<%= format_price(@game.total_profit) %>.</p>
+
+<div class='back-link'>
+  <%= link_to('Back to Games List', games_path) %>
+</div>

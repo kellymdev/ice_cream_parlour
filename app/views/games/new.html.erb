@@ -1,4 +1,4 @@
-<h2>New Game</h2>
+<h1>New Game</h1>
 
 <% if @game.errors.any? %>
   <ul>
@@ -11,7 +11,7 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 
-  <%= f.submit 'Create Game' %>
+  <%= f.submit 'Create Game', class: 'button' %>
 <% end %>
 
 <div class='back-link'>

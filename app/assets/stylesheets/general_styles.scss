@@ -1,15 +1,52 @@
+@import 'fonts_and_colours';
+
+body {
+  background-color: $light-grey;
+  color: $charcoal;
+  font-family: $body-font;
+}
+
+h1 {
+  font-family: $heading-font;
+  border-bottom: 3px solid $pink;
+}
+
+a {
+  color: $pink;
+  text-decoration: none;
+}
+
+form {
+  width: 300px;
+
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 15px;
+    font-family: $body-font;
+    font-size: 1.2em;
+  }
+}
+
 .success-message {
   color: green;
 }
 
 .button {
-  background-color: gray;
-  color: black;
+  background-color: $blue;
+  color: white;
   border-radius: 3px;
   padding: 5px 10px;
   text-decoration: none;
+  font-family: $body-font;
+  font-size: 1.2em;
 }
 
 .right-aligned {
   text-align: right;
+}
+
+.back-link {
+  margin-top: 20px;
+  border-top: 1px solid $pink;
+  padding-top: 5px;
 }
