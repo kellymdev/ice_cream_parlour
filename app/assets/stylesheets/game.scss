@@ -1,0 +1,15 @@
+.games-list,
+.inventory,
+.day-history {
+  td {
+    border-bottom: 1px solid gray;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.games-list {
+  margin-top: 25px;
+}

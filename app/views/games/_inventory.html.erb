@@ -1,16 +1,16 @@
-<table>
+<table class="inventory">
   <tr class="current-balance">
     <td>Balance</td>
-    <td>$<%= format_price(@game.inventory.balance) %></td>
+    <td class="right-aligned">$<%= format_price(@game.inventory.balance) %></td>
   </tr>
 
   <tr class="milk-inventory">
     <td>Milk</td>
-    <td><%= @game.inventory.milk %></td>
+    <td class="right-aligned"><%= @game.inventory.milk %></td>
   </tr>
 
   <tr class="sugar-inventory">
     <td>Sugar</td>
-    <td><%= @game.inventory.sugar %></td>
+    <td class="right-aligned"><%= @game.inventory.sugar %></td>
   </tr>
 </table>
