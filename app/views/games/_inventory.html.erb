@@ -1,10 +1,16 @@
-<dl>
-  <dt>Balance</dt>
-  <dd>$<%= format_price(@game.inventory.balance) %></dd>
+<table>
+  <tr class="current-balance">
+    <td>Balance</td>
+    <td>$<%= format_price(@game.inventory.balance) %></td>
+  </tr>
 
-  <dt>Milk</dt>
-  <dd><%= @game.inventory.milk %></dd>
+  <tr class="milk-inventory">
+    <td>Milk</td>
+    <td><%= @game.inventory.milk %></td>
+  </tr>
 
-  <dt>Sugar</dt>
-  <dd><%= @game.inventory.sugar %></dd>
-</dl>
+  <tr class="sugar-inventory">
+    <td>Sugar</td>
+    <td><%= @game.inventory.sugar %></td>
+  </tr>
+</table>
