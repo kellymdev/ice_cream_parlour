@@ -2,6 +2,10 @@ Given("a user is on the Games List") do
   visit('/games')
 end
 
-Given("I enter {string} as the name") do |string|
-  fill_in('Name', with: string)
+Given("a game exists") do
+  @game = CreateGame.new(name: 'Amazing Ice Creams').call
+end
+
+Given("I am on the game details screen for the game") do
+  visit(game_path(@game))
 end
