@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ProcessDay, type: :service do
   describe '#call' do
     let!(:game) { create(:game) }
-    let!(:inventory) { create(:inventory, game: game) }
+    let!(:inventory) { create(:inventory, game: game, balance: balance) }
     let(:balance) { 5.00 }
     let(:ice_creams_to_make) { 1 }
     let(:day_params) do
@@ -15,10 +15,6 @@ RSpec.describe ProcessDay, type: :service do
         ice_creams_to_make: ice_creams_to_make,
         ice_cream_price: 0.60
       }
-    end
-
-    before do
-      game.inventory.update!(balance: balance)
     end
 
     subject(:service) { described_class.new(game, day_params) }
@@ -47,36 +43,59 @@ RSpec.describe ProcessDay, type: :service do
       end
     end
 
-    context 'when there are insufficient funds to buy milk' do
-      let(:balance) { 0.01 }
+    context 'insufficient funds' do
+      let(:ice_creams_to_make) { 2 }
 
-      it 'does not create a day' do
-        expect { service.call }.not_to change { Day.count }
+      context 'when there are insufficient funds to buy milk' do
+        let(:balance) { 0.01 }
+
+        it 'does not create a day' do
+          expect { service.call }.not_to change { Day.count }
+        end
+
+        it 'creates an error on the service' do
+          service.call
+
+          expect(service.errors).to include 'Insufficient funds to buy milk'
+        end
+
+        it 'does not change the inventory' do
+          expect(game.inventory.milk).to eq 1
+          expect(game.inventory.sugar).to eq 1
+          expect(game.inventory.balance).to eq balance
+        end
       end
 
-      it 'creates an error on the service' do
-        service.call
+      context 'when there are insufficient funds to buy sugar' do
+        let(:balance) { 0.51 }
 
-        expect(service.errors).to include 'Insufficient funds to buy milk'
-      end
-    end
+        it 'does not create a day' do
+          expect { service.call }.not_to change { Day.count }
+        end
 
-    context 'when there are insufficient funds to buy sugar' do
-      let(:balance) { 0.51 }
+        it 'creates an error on the service' do
+          service.call
 
-      it 'does not create a day' do
-        expect { service.call }.not_to change { Day.count }
-      end
+          expect(service.errors).to include 'Insufficient funds to buy sugar'
+        end
 
-      it 'creates an error on the service' do
-        service.call
-
-        expect(service.errors).to include 'Insufficient funds to buy sugar'
+        it 'does not change the inventory' do
+          expect(game.inventory.milk).to eq 1
+          expect(game.inventory.sugar).to eq 1
+          expect(game.inventory.balance).to eq balance
+        end
       end
     end
 
     context 'when there are not enough ingredients to make the requested ice creams' do
       let(:ice_creams_to_make) { 5 }
+
+      before do
+        game.inventory.update!(
+          milk: 3,
+          sugar: 3
+        )
+      end
 
       it 'does not create a day' do
         expect { service.call }.not_to change { Day.count }
@@ -86,6 +105,12 @@ RSpec.describe ProcessDay, type: :service do
         service.call
 
         expect(service.errors).to include "You don't have enough ingredients to make that many ice creams"
+      end
+
+      it 'does not change the inventory' do
+        expect(game.inventory.milk).to eq 3
+        expect(game.inventory.sugar).to eq 3
+        expect(game.inventory.balance).to eq balance
       end
     end
   end

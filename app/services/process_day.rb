@@ -3,6 +3,8 @@
 class ProcessDay
   attr_reader :game, :milk_price, :sugar_price, :milk, :sugar, :ice_creams_to_make, :ice_cream_price, :day, :error_list, :ice_creams_sold
 
+  class InvalidInventoryError < StandardError; end
+
   def initialize(game, day_params)
     @game = game
     @milk_price = day_params[:milk_price].to_d
@@ -17,12 +19,12 @@ class ProcessDay
   def call
     build_day
 
-    buy_supplies('milk', milk)
-    buy_supplies('sugar', sugar)
+    Day.transaction do
+      buy_supplies('milk', milk)
+      buy_supplies('sugar', sugar)
 
-    make_ice_cream
-
-    return unless error_list.empty?
+      make_ice_cream
+    end
 
     determine_temperature
 
@@ -30,6 +32,10 @@ class ProcessDay
     calculate_profit
 
     day.save
+
+  rescue InvalidInventoryError => e
+    @error_list << e.message
+    game.reload # reload the game to reset the inventory
   end
 
   def errors
@@ -61,7 +67,7 @@ class ProcessDay
     new_balance = game.inventory.balance - send("cost_of_#{commodity}")
 
     if new_balance <= 0
-      error_list << "Insufficient funds to buy #{commodity}"
+      raise InvalidInventoryError.new("Insufficient funds to buy #{commodity}")
     else
       game.inventory.update!(
         commodity => game.inventory.send(commodity) + quantity,
@@ -82,7 +88,7 @@ class ProcessDay
         sugar: game.inventory.sugar - ice_creams_to_make
       )
     else
-      error_list << "You don't have enough ingredients to make that many ice creams"
+      raise InvalidInventoryError.new("You don't have enough ingredients to make that many ice creams")
     end
   end
 

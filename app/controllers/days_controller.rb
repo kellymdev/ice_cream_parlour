@@ -13,6 +13,7 @@ class DaysController < ApplicationController
 
     if service.errors.any?
       @errors = service.errors
+
       @day = @game.days.new(milk_price: day_params[:milk_price], sugar_price: day_params[:sugar_price])
       render :new
     else
