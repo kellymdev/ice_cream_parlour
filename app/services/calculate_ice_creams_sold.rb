@@ -35,8 +35,10 @@ class CalculateIceCreamsSold
       0.50
     when 151..200
       0.4
+    when 201..500
+      0.2
     else
-      0.25
+      0.05
     end
   end
 

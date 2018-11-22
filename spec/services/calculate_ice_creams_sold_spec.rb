@@ -56,11 +56,19 @@ RSpec.describe CalculateIceCreamsSold, type: :service do
         end
       end
 
-      context 'when the price is more than 2.00' do
+      context 'when the price is between 2.01 and 5.00' do
         let(:price) { 2.25 }
 
-        it 'uses a multiplier of 0.25' do
-          expect(service.call).to eq 5
+        it 'uses a multiplier of 0.2' do
+          expect(service.call).to eq 4
+        end
+      end
+
+      context 'when the price is more than 5.00' do
+        let(:price) { 5.50 }
+
+        it 'uses a multiplier of 0.05' do
+          expect(service.call).to eq 1
         end
       end
     end
