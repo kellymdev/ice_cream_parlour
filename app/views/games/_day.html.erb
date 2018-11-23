@@ -6,4 +6,6 @@
   <td class="right-aligned"><%= format_price(day.ice_cream_price) %></td>
   <td class="right-aligned"><%= day.ice_creams_sold %></td>
   <td class="right-aligned"><%= format_price(day.profit) %></td>
+  <td class="right-aligned"><%= day.purchases.count %></td>
+  <td><%= link_to 'View Purchases', day_purchases_path(day) %></td>
 </tr>

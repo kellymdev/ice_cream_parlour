@@ -1,0 +1,20 @@
+<h1>Daily Purchases</h1>
+
+<table class="purchases-table">
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Quantity</th>
+      <th>Purchase Price</th>
+      <th>Total Cost</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'purchase', collection: @purchases %>
+  </tbody>
+</table>
+
+<div class='back-link'>
+  <%= link_to('Back to Game', game_path(@day.game)) %>
+</div>

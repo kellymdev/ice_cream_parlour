@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
+  render_views
+
   let!(:game) { create(:game) }
   let!(:inventory) { create(:inventory, game: game) }
 
   describe '#index' do
-    render_views
 
     it 'renders the index template' do
       get :index
