@@ -64,6 +64,8 @@ class ProcessDay
   end
 
   def buy_supplies(commodity, quantity)
+    return if quantity <= 0
+
     new_balance = game.inventory.balance - send("cost_of_#{commodity}")
 
     if new_balance <= 0
