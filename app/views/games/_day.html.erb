@@ -1,3 +1,5 @@
+<% purchase_count = day.purchases.count %>
+
 <tr>
   <td class="right-aligned"><%= day.temperature %></td>
   <td class="right-aligned"><%= format_price(day.milk_price) %></td>
@@ -6,6 +8,6 @@
   <td class="right-aligned"><%= format_price(day.ice_cream_price) %></td>
   <td class="right-aligned"><%= day.ice_creams_sold %></td>
   <td class="right-aligned"><%= format_price(day.profit) %></td>
-  <td class="right-aligned"><%= day.purchases.count %></td>
-  <td><%= link_to 'View Purchases', day_purchases_path(day) %></td>
+  <td class="right-aligned"><%= purchase_count %></td>
+  <td><%= link_to('View Purchase'.pluralize(purchase_count), day_purchases_path(day)) unless purchase_count.zero? %></td>
 </tr>

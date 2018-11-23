@@ -1,6 +1,6 @@
-<tr>
+<tr class=<%= purchase.ingredient + "-row" %>>
   <td><%= purchase.ingredient %></td>
-  <td class="right-aligned"><%= purchase.quantity %></td>
-  <td class="right-aligned"><%= format_price(purchase_price(purchase.ingredient, @day)) %></td>
-  <td class="right-aligned"><%= format_price(total_purchase_price(purchase, @day)) %></td>
+  <td class="right-aligned quantity"><%= purchase.quantity %></td>
+  <td class="right-aligned purchase-price"><%= format_price(purchase_price(purchase.ingredient, @day)) %></td>
+  <td class="right-aligned total-cost"><%= format_price(total_purchase_price(purchase, @day)) %></td>
 </tr>
